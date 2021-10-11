@@ -9,12 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Users' }
       },
       body: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       questionId: {
+        allowNull: false,
+        references: { model: 'Questions' },
         type: Sequelize.INTEGER
       },
       createdAt: {
