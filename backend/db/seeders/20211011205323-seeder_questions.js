@@ -12,7 +12,7 @@ module.exports = {
       {
         userId: 3,
         topicId: 1,
-        body: 'Can somone pick some berries for me, down by the lake?',
+        body: 'Can somone pick some berries for me, down by the river?',
         createdAt: new Date(),
         updatedAt: new Date()
       },
