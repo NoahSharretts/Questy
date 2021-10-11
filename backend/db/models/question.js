@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     body: DataTypes.TEXT
   }, {});
   Question.associate = function(models) {
-    Question.belongsTo(models.Users, { foreignKey: 'userId' })
-    Question.belongsTo(models.Topics, { foreignKey: 'topicId' })
-    Question.hasMany(models.Answers, { foreignKey: 'questionId', onDelete: 'CASCADE', hooks:true })
+    Question.belongsTo(models.User, { foreignKey: 'userId' })
+    Question.belongsTo(models.Topic, { foreignKey: 'topicId' })
+    Question.hasMany(models.Answer, { foreignKey: 'questionId', onDelete: 'CASCADE', hooks:true })
 
   };
   return Question;

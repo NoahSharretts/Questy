@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     answerId: DataTypes.INTEGER
   }, {});
   Vote.associate = function(models) {
-    Vote.belongsTo(models.Awnsers, { foreignKey: 'answerId' })
-    Vote.belongsTo(models.Users, { foreignKey: 'userId' })
+    Vote.belongsTo(models.Answer, { foreignKey: 'answerId' })
+    Vote.belongsTo(models.User, { foreignKey: 'userId' })
   };
   return Vote;
 };
