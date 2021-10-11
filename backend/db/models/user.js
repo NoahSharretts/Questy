@@ -86,6 +86,11 @@ module.exports = (sequelize, DataTypes) => {
       });
       return await User.scope('currentUser').findByPk(user.id);
     };
+
+    User.hasMany(models.Questions, { foreignKey: 'userId' })
+    User.hasMany(models.Answers, { foreignKey: 'userId' })
+    User.hasMany(models.Votes, { foreignKey: 'userId' })
+
   };
   return User;
 };
