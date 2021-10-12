@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
 const { User } = require('../db/models');
-
+const csrf = require('csrf');
 const { secret, expiresIn } = jwtConfig;
 
 // Sends a JWT Cookie
@@ -63,5 +63,6 @@ const requireAuth = [
   },
 ];
 
+const csrfProtection = csrf({ cookie: true })
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+module.exports = { setTokenCookie, restoreUser, requireAuth, csrfProtection };
