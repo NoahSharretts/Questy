@@ -2,7 +2,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+const { csrfProtection, restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Question, Vote, Answer } = require('../../db/models');
 
 const router = express.Router();
@@ -21,30 +21,96 @@ const questionValidator = [
     .withMessage('Please choose a topic')
 ]
 
+// Checking permissions
+
+const checkPermissions = (question, currentUser) => {
+  if (question.userId !== currentUser.id ) {
+    const err = new Error('Illegal operation.');
+    err.status = 403;
+    throw err;
+  }
+};
 
 
 // GET: all questions
 router.get(
   '/',
   requireAuth,
-  asyncHandler( async(req, res) => {
+  csrfProtection,
+  asyncHandler( async(req, res, next) => {
     const questions = await Question.findAll({
       include: [
-        
+
       ]
     })
   })
 )
 // GET: all questions by for specific user
+router.get(
+  '/',
+  requireAuth,
+  csrfProtection,
+  questionValidator,
+  asyncHandler( async(req, res, next) => {
+    const questionId = parseInt( req.params.id, 10)
+    const question = await findByPk(questionId)
+  })
+)
 
 // GET: question by specific PK
-
+router.get(
+  '/',
+  requireAuth,
+  csrfProtection,
+  questionValidator,
+  asyncHandler( async(req, res, next) => {
+    const questionId = parseInt( req.params.id, 10)
+    const question = await findByPk(questionId)
+  })
+)
 // GET: create question form
-
+router.get(
+  '/new',
+  requireAuth,
+  csrfProtection,
+  questionValidator,
+  asyncHandler( async(req, res, next) => {
+    
+  })
+)
 // POST: post question
+router.post(
+  '/',
+  requireAuth,
+  csrfProtection,
+  questionValidator,
+  asyncHandler( async(req, res, next) => {
+   
+  })
+)
 
 // PUT or POST: update/edit specific question by PK
+router.put(
+  '/',
+  requireAuth,
+  csrfProtection,
+  questionValidator,
+  asyncHandler( async(req, res, next) => {
+    const questionId = parseInt( req.params.id, 10)
+    const question = await findByPk(questionId)
+  
+    return res.json({ question }) 
+  })
+)
 
 // DELETE: delete specific question by PK
-
+router.delete(
+  '/:id',
+  requireAuth,
+  asyncHandler( async(req, res, next) => {
+    const questionId = parseInt( req.params.id, 10)
+    const question = await Question.findByPk(questionId);
+    return res.json({ question })
+  })
+)
 module.exports = router;
