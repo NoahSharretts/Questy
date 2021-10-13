@@ -2,7 +2,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { csrfProtection, restoreUser, requireAuth } = require('../../utils/auth');
+const { restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Question, Vote, Answer, Topic } = require('../../db/models');
 
 const router = express.Router();
@@ -12,7 +12,7 @@ const router = express.Router();
 
 //Make validators
 const questionValidator = [
-  check('userInput')
+  check('body')
     .exists({ checkFalsy: true })
     .withMessage('Please provide a value for userInput')
     .isLength({ max: 100 }),
@@ -21,6 +21,11 @@ const questionValidator = [
     .withMessage('Please choose a topic')
 ]
 
+const answerValidators = [
+  check('body')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a value for userInput')
+]
 // Checking permissions
 
 const checkPermissions = (question, currentUser) => {
@@ -127,22 +132,54 @@ router.put(
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
-    const topics = await findAll();
+    const {
+      body,
+      topic,
+    } = req.body;
 
     checkPermissions(question, res.locals.user)
-  
+    
+    question.update({
+      body,
+      topicId: topic
+    })
+
     return res.json({ question }) 
   })
 )
 
 // DELETE: delete specific question by PK
 router.delete(
-  '/delete/:id(\\d+)',
+  '/:id(\\d+)',
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await Question.findByPk(questionId);
+
+    checkPermissions(question, res.locals.user)
+
+    await question.destroy();
+
     return res.json({ question })
   })
 )
+
+// POST: adding answer to specific question
+router.post(
+  '/:id(\\d+)/answer',
+  requireAuth,
+  answerValidators,
+  asyncHandler( async(req, res, next) => {
+    const { body } = req.body;
+    const theQuestionId = parseInt( req.params.id, 10)
+    const addAnswer = await Answer.build({
+      userId: req.session.auth.userId,
+      body,
+      questionId: theQuestionId
+    })
+
+    return res.json({ addAnswer })
+  })
+)
+
 module.exports = router;
