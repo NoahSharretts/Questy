@@ -3,6 +3,8 @@ import { csrfFetch } from './csrf';
 const LOAD_QUESTION = 'LOAD_QUESTION';
 const LOAD_TOPICS = 'LOAD_TOPICS';
 const ADD_QUESTION = 'ADD_QUESTION';
+const EDIT_QUESTION = 'EDIT_QUESTION';
+const DELETE_QUESTION = 'DELETE_QUESTION';
 
 const load_question = list => ({
   type: LOAD_QUESTION,
@@ -19,6 +21,15 @@ const add_question = question => ({
   question
 })
 
+const edit_question = editQuestion => ({
+  type: EDIT_QUESTION,
+  editQuestion
+})
+
+const delete_question = deleteQuestion => ({
+  type: DELETE_QUESTION,
+  deleteQuestion
+})
 
 export const getQuestion = data => async dispatch => {
 
@@ -52,7 +63,7 @@ export const getQuestionTopics = () => async dispatch => {
 export const createQuestion = data => async dispatch => {
   console.log(data);
   const response = await csrfFetch(`/api/question`, {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -66,9 +77,9 @@ export const createQuestion = data => async dispatch => {
   }
 };
 
-export const updateQuestion = data => async dispatch => {
+export const editQuestion = data => async dispatch => {
   const response = await csrfFetch(`/api/question/${data.id}`, {
-    method: 'put',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -77,7 +88,19 @@ export const updateQuestion = data => async dispatch => {
   
   if (response.ok) {
     const question = await response.json();
-    dispatch(add_question(question));
+    dispatch(edit_question(question));
+    return question;
+  }
+};
+
+export const deleteQuestion = data => async dispatch => {
+  const response = await csrfFetch(`/api/question/${data.id}`, {
+    method: 'DELETE'
+  });
+  
+  if (response.ok) {
+    const question = await response.json();
+    dispatch(delete_question(question));
     return question;
   }
 };
@@ -86,3 +109,22 @@ const initialState = {
   list: [],
   types: []
 };
+
+const questionReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOAD_QUESTION: {
+      const allQuestions = {};
+      action.list.forEach(question => {
+        allQuestions[question.id] = question;
+      });
+      return {
+        
+      }
+    }
+    case LOAD_TOPICS: {}
+    case ADD_QUESTION: {}
+    case EDIT_QUESTION: {}
+    case DELETE_QUESTION: {}
+
+  }
+}
