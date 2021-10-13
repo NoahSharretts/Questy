@@ -36,7 +36,6 @@ const checkPermissions = (question, currentUser) => {
 router.get(
   '/',
   requireAuth,
-  csrfProtection,
   asyncHandler( async(req, res, next) => {
     const questions = await Question.findAll({
       include: [
@@ -53,7 +52,6 @@ router.get(
 router.get(
   '/',
   requireAuth,
-  csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
@@ -68,7 +66,6 @@ router.get(
 router.get(
   '/:id(\\d+)',
   requireAuth,
-  csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
@@ -85,7 +82,6 @@ router.get(
 router.get(
   '/new',
   requireAuth,
-  csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const topics = await Topic.findAll()
@@ -97,7 +93,6 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const {
@@ -128,7 +123,6 @@ router.post(
 router.put(
   '/edit/:id(\\d+)',
   requireAuth,
-  csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
