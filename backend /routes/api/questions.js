@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { csrfProtection, restoreUser, requireAuth } = require('../../utils/auth');
-const { User, Question, Vote, Answer } = require('../../db/models');
+const { User, Question, Vote, Answer, Topic } = require('../../db/models');
 
 const router = express.Router();
 
@@ -40,9 +40,13 @@ router.get(
   asyncHandler( async(req, res, next) => {
     const questions = await Question.findAll({
       include: [
-
+        User,
+        Topic,
+        Vote,
+        Answer
       ]
     })
+    return res.json({ questions })
   })
 )
 // GET: all questions by for specific user
@@ -75,7 +79,7 @@ router.get(
   csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
-    
+    const topics = await Topic.findAll()
   })
 )
 // POST: post question
