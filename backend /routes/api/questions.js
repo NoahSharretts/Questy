@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { csrfProtection, restoreUser, requireAuth } = require('../../utils/auth');
 const { User, Question, Vote, Answer, Topic } = require('../../db/models');
@@ -58,7 +58,10 @@ router.get(
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
+
+    return res.json({ question })
   })
+  
 )
 
 // GET: question by specific PK
@@ -70,6 +73,8 @@ router.get(
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
+
+    return res.json({ question })
   })
 )
 // GET: create question form
@@ -80,6 +85,8 @@ router.get(
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const topics = await Topic.findAll()
+
+    return res.json({ topics })
   })
 )
 // POST: post question
@@ -89,7 +96,27 @@ router.post(
   csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
-   
+    const {
+      body,
+      topic
+    } = req.body;
+
+    const question = Question.build({
+      userId: req.session.auth.userId,
+      body,
+      topicId: topic,
+    })
+
+    const validatorErrors = validationResult(req)
+
+    if(validatorErrors.isEmpty()) {
+      await question.save();
+      res.redirect('/')
+    } else {
+      const topics = await Topic.findAll();
+      const errors = validatorErrors.array().map((error) => error.msg);
+      return res.json({ topics })
+    }
   })
 )
 

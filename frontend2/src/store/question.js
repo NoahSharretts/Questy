@@ -22,7 +22,7 @@ const add_question = question => ({
 
 export const getQuestion = data => async dispatch => {
 
-  const response = await fetch(`/api/question`)
+  const response = await csrfFetch(`/api/question`)
 
   if(response.ok) {
     const list = await response.json();
@@ -32,7 +32,7 @@ export const getQuestion = data => async dispatch => {
 
 export const getOneQuestion = id => async dispatch => {
 
-  const response = await fetch(`/api/question${id}`)
+  const response = await csrfFetch(`/api/question${id}`)
 
   if(response.ok) {
     const question = await response.json();
@@ -41,7 +41,7 @@ export const getOneQuestion = id => async dispatch => {
 }
 
 export const getQuestionTopics = () => async dispatch => {
-  const response = await fetch(`/api/question/topics`);
+  const response = await csrfFetch(`/api/question/topics`);
 
   if (response.ok) {
     const topics = await response.json();
@@ -51,7 +51,7 @@ export const getQuestionTopics = () => async dispatch => {
 
 export const createQuestion = data => async dispatch => {
   console.log(data);
-  const response = await fetch(`/api/question`, {
+  const response = await csrfFetch(`/api/question`, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export const createQuestion = data => async dispatch => {
 };
 
 export const updateQuestion = data => async dispatch => {
-  const response = await fetch(`/api/question/${data.id}`, {
+  const response = await csrfFetch(`/api/question/${data.id}`, {
     method: 'put',
     headers: {
       'Content-Type': 'application/json',
