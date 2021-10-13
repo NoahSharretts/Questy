@@ -9,7 +9,7 @@ const load_question = list => ({
   list,
 })
 
-const load_topics = topics => ({
+const load_topics = topic => ({
   type: LOAD_TOPICS,
   topic
 })
