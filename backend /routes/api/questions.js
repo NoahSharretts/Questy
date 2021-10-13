@@ -66,13 +66,17 @@ router.get(
 
 // GET: question by specific PK
 router.get(
-  '/',
+  '/:id(\\d+)',
   requireAuth,
   csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
-    const question = await findByPk(questionId)
+    const question = await findByPk(questionId, {
+      where: questionId,
+      order: [["createdAt", "DESC"]],
+      include: User
+    });
 
     return res.json({ question })
   })
@@ -122,13 +126,16 @@ router.post(
 
 // PUT or POST: update/edit specific question by PK
 router.put(
-  '/',
+  '/edit/:id(\\d+)',
   requireAuth,
   csrfProtection,
   questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
+    const topics = await findAll();
+
+    checkPermissions(question, res.locals.user)
   
     return res.json({ question }) 
   })
