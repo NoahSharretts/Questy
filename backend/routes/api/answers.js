@@ -27,7 +27,7 @@ const checkPermissions = (question, currentUser) => {
 };
 
 router.put(
-  '/:id(\\d+)',
+  '/:id',
   requireAuth,
   answerValidators,
   asyncHandler( async(req, res, next) => {
@@ -39,12 +39,12 @@ router.put(
     
     answer.update({ body })
 
-    return res.json({ answer }) 
+    return res.json(answer) 
   })
 )
 
 router.delete(
-  '/:id(\\d+)',
+  '/:id',
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const answerId = parseInt( req.params.id, 10)
@@ -54,7 +54,7 @@ router.delete(
 
     await answer.destroy();
 
-    return res.json({ answer })
+    return res.json(answer)
   })
 )
 

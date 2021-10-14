@@ -105,10 +105,7 @@ export const deleteQuestion = data => async dispatch => {
   }
 };
 
-const initialState = {
-  list: [],
-  types: []
-};
+const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -118,11 +115,17 @@ const questionReducer = (state = initialState, action) => {
         allQuestions[question.id] = question;
       });
       return {
-        
+        ...allQuestions,
+        ...state,
+        list: action.list
       }
     }
-    case LOAD_TOPICS: {}
-    case ADD_QUESTION: {}
+    case LOAD_TOPICS: {
+      
+    }
+    case ADD_QUESTION: {
+
+    }
     case EDIT_QUESTION: {}
     case DELETE_QUESTION: {}
 

@@ -50,7 +50,7 @@ router.get(
         Answer
       ]
     })
-    return res.json({ questions })
+    return res.json(questions)
   })
 )
 // GET: all questions by for specific user
@@ -62,14 +62,14 @@ router.get(
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
 
-    return res.json({ question })
+    return res.json(question)
   })
   
 )
 
 // GET: question by specific PK
 router.get(
-  '/:id(\\d+)',
+  '/:id',
   requireAuth,
   questionValidator,
   asyncHandler( async(req, res, next) => {
@@ -80,7 +80,7 @@ router.get(
       include: User
     });
 
-    return res.json({ question })
+    return res.json(question)
   })
 )
 // GET: create question form
@@ -91,7 +91,7 @@ router.get(
   asyncHandler( async(req, res, next) => {
     const topics = await Topic.findAll()
 
-    return res.json({ topics })
+    return res.json(topics)
   })
 )
 // POST: post question
@@ -106,7 +106,7 @@ router.post(
     } = req.body;
 
     const question = Question.build({
-      userId: req.session.auth.userId,
+      userId: req.user.id,
       body,
       topicId: topic,
     })
@@ -119,14 +119,14 @@ router.post(
     } else {
       const topics = await Topic.findAll();
       const errors = validatorErrors.array().map((error) => error.msg);
-      return res.json({ topics })
+      return res.json(topics)
     }
   })
 )
 
 // PUT or POST: update/edit specific question by PK
 router.put(
-  '/edit/:id(\\d+)',
+  '/edit/:id',
   requireAuth,
   questionValidator,
   asyncHandler( async(req, res, next) => {
@@ -144,13 +144,13 @@ router.put(
       topicId: topic
     })
 
-    return res.json({ question }) 
+    return res.json(question) 
   })
 )
 
 // DELETE: delete specific question by PK
 router.delete(
-  '/:id(\\d+)',
+  '/:id',
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
@@ -160,25 +160,25 @@ router.delete(
 
     await question.destroy();
 
-    return res.json({ question })
+    return res.json(question)
   })
 )
 
 // POST: adding answer to specific question
 router.post(
-  '/:id(\\d+)/answer',
+  '/:id/answer',
   requireAuth,
   answerValidators,
   asyncHandler( async(req, res, next) => {
     const { body } = req.body;
     const theQuestionId = parseInt( req.params.id, 10)
     const addAnswer = await Answer.build({
-      userId: req.session.auth.userId,
+      userId: req.user.id,
       body,
       questionId: theQuestionId
     })
 
-    return res.json({ addAnswer })
+    return res.json(addAnswer)
   })
 )
 
