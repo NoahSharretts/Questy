@@ -1,6 +1,6 @@
 import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Link, Route, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getQuestion } from '../../store/question';
 import './QuestionFeed.css'
 
@@ -9,10 +9,7 @@ const QuestionFeed = () => {
 
   const sessionUser = useSelector(state => state.session.user)
 
-  const question =  useSelector(state => {
-    console.log(state, 'here')
-    return state.question.map(questionId => state.question[questionId])
-  })
+  const question =  useSelector(state => state.question);
   // const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -25,10 +22,14 @@ const QuestionFeed = () => {
 
   return (
     <main>
-      <h2>Qustions!</h2>
-      <div>
-        
-      </div>
+    <h2>Qustions!</h2>
+      <ul>{Object.keys(question).map(key =>
+        <li key={question[key].id}>
+        <Link to={`/question/${question[key].id}`}>
+          <div>{question[key].title}</div>
+        </Link>
+        </li>)}
+      </ul>
     </main>
     
   );

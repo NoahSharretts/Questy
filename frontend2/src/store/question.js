@@ -110,15 +110,11 @@ const initialState = {};
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
-      const allQuestions = {};
-      action.list.forEach((question) => {
-        allQuestions[question.id] = question;
-      });
-      return {
-        ...allQuestions,
-        ...state,
-        list: action.list
-      }
+      let newState;
+      newState = Object.assign({}, state);
+      action.payload["allQuestions"].forEach((question) => {
+        newState[question.id] = question;
+      })
     }
     case LOAD_TOPICS: {
       return {
@@ -134,7 +130,7 @@ const questionReducer = (state = initialState, action) => {
         };
         const questionList = newState.list.map(id => newState[id]);
         questionList.push(action.question);
-        newState.lsit = questionList;
+        newState.list = questionList;
         return newState;
       }
       // return {
