@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import QuestionFeed from "./components/QuestionFeed"
 
 function App() {
   const dispatch = useDispatch();
@@ -17,8 +18,14 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path='/'>
+
+          </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='*'>
+            <h2>Page Not Found</h2>
           </Route>
         </Switch>
       )}
