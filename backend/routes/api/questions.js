@@ -69,7 +69,7 @@ router.get(
 
 // GET: question by specific PK
 router.get(
-  '/:id',
+  '/:id(\\d+)',
   requireAuth,
   questionValidator,
   asyncHandler( async(req, res, next) => {
@@ -126,7 +126,7 @@ router.post(
 
 // PUT or POST: update/edit specific question by PK
 router.put(
-  '/edit/:id',
+  '/edit/:id(\\d+)',
   requireAuth,
   questionValidator,
   asyncHandler( async(req, res, next) => {
@@ -150,7 +150,7 @@ router.put(
 
 // DELETE: delete specific question by PK
 router.delete(
-  '/:id',
+  '/:id(\\d+)',
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
@@ -166,7 +166,7 @@ router.delete(
 
 // POST: adding answer to specific question
 router.post(
-  '/:id/answer',
+  '/:id(\\d+)/answer',
   requireAuth,
   answerValidators,
   asyncHandler( async(req, res, next) => {

@@ -27,7 +27,7 @@ const checkPermissions = (question, currentUser) => {
 };
 
 router.put(
-  '/:id',
+  '/:id(\\d+)',
   requireAuth,
   answerValidators,
   asyncHandler( async(req, res, next) => {
@@ -44,7 +44,7 @@ router.put(
 )
 
 router.delete(
-  '/:id',
+  '/:id(\\d+)',
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const answerId = parseInt( req.params.id, 10)
