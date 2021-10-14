@@ -31,7 +31,7 @@ const delete_question = deleteQuestion => ({
   payload: deleteQuestion
 })
 
-export const getQuestion = data => async dispatch => {
+export const getQuestion = () => async dispatch => {
 
   const response = await csrfFetch(`/api/question`)
 
@@ -105,16 +105,13 @@ export const deleteQuestion = data => async dispatch => {
   }
 };
 
-const initialState = {
-  list = [],
-  topic = []
-};
+const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
       const allQuestions = {};
-      action.list.forEach(question => {
+      action.list.forEach((question) => {
         allQuestions[question.id] = question;
       });
       return {
@@ -129,9 +126,22 @@ const questionReducer = (state = initialState, action) => {
         topic: action.topic
       }
     }
-    // case ADD_QUESTION: {
-
-    // }
+    case ADD_QUESTION: {
+      if (!state[action.question.id]) {
+        const newState = {
+          ...state,
+          [action.question.id]: action.question
+        };
+        const questionList = newState.list.map(id => newState[id]);
+        questionList.push(action.question);
+        newState.lsit = questionList;
+        return newState;
+      }
+      // return {
+      //   ...state,
+      //   []
+      // }
+    }
     // case EDIT_QUESTION: {
 
     // }
@@ -143,3 +153,5 @@ const questionReducer = (state = initialState, action) => {
 
   }
 }
+
+export default questionReducer;

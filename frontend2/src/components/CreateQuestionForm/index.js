@@ -26,11 +26,6 @@ const CreateQuestionForm = () => {
     if (!body) ERRORS.push("CANNOT submit an empty question");
   
     if (body.length < 3) ERRORS.push("Questions must be 3 characters or more");
-    
-    const fruitName = fruits.map((fruit) => fruit.name)
-    if(fruitName.includes(name)) ERRORS.push(	"Name already exists.")
-
-    if( sweetness < 1 || sweetness > 10) ERRORS.push("Sweetness must be between 1 and 10")
 
     setErrors(ERRORS)
   }, [fruits, name, sweetness])

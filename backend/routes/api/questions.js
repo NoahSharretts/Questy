@@ -46,7 +46,6 @@ router.get(
       include: [
         User,
         Topic,
-        Vote,
         Answer
       ]
     })
