@@ -8,27 +8,27 @@ const DELETE_QUESTION = 'DELETE_QUESTION';
 
 const load_question = list => ({
   type: LOAD_QUESTION,
-  list,
+  payload: list,
 })
 
 const load_topics = topic => ({
   type: LOAD_TOPICS,
-  topic
+  payload: topic
 })
 
 const add_question = question => ({
   type: ADD_QUESTION,
-  question
+  payload: question
 })
 
 const edit_question = editQuestion => ({
   type: EDIT_QUESTION,
-  editQuestion
+  payload: editQuestion
 })
 
 const delete_question = deleteQuestion => ({
   type: DELETE_QUESTION,
-  deleteQuestion
+  payload: deleteQuestion
 })
 
 export const getQuestion = data => async dispatch => {
@@ -105,7 +105,10 @@ export const deleteQuestion = data => async dispatch => {
   }
 };
 
-const initialState = {};
+const initialState = {
+  list = [],
+  topic = []
+};
 
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -121,13 +124,22 @@ const questionReducer = (state = initialState, action) => {
       }
     }
     case LOAD_TOPICS: {
-      
+      return {
+        ...state,
+        topic: action.topic
+      }
     }
-    case ADD_QUESTION: {
+    // case ADD_QUESTION: {
 
-    }
-    case EDIT_QUESTION: {}
-    case DELETE_QUESTION: {}
+    // }
+    // case EDIT_QUESTION: {
+
+    // }
+    // case DELETE_QUESTION: {
+
+    // }
+    default :
+      return state;
 
   }
 }
