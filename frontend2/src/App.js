@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import QuestionFeed from "./components/QuestionFeed";
 import Home from "./components/Home";
+import CreateQuestionForm from "./components/CreateQuestionForm"
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path='/feed'>
             <QuestionFeed />
+          </Route>
+          <Route path='/question'> 
+            <CreateQuestionForm />
           </Route>
           <Route path="/signup">
             <SignupFormPage />

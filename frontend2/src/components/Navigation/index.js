@@ -24,11 +24,12 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <div>
-      <div>
+    <div className='navbar'>
+      <div className='navbar-items'>
         <h1>Questy</h1>
         <NavLink exact to="/">Home</NavLink>
         <NavLink exact to='/feed'>Feed</NavLink>
+        <NavLink to='/question'>Question?</NavLink>
         <SearchBar />
         {isLoaded && sessionLinks}
       </div>

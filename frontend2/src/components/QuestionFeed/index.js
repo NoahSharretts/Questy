@@ -16,17 +16,36 @@ const QuestionFeed = () => {
     dispatch(getQuestion());
   }, [dispatch]);
 
+  const handleEditClick = (e) => {
+    e.preventDefault();
+  }
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+  }
+
+  // console.log(sessionUser, 'question')
   
-  console.log(questions, 'question')
+  // console.log(questions, 'question')
   
   return (
     <div className='questionContainer'>
       {Object.keys(questions).map(key =>
-      <div className='questionDetails'>
+      <div 
+        key={questions[key].id} 
+        className='questionDetails'
+      >
       <h5>{questions[key].User.username}</h5>  
-      <Link to={`/question/${questions[key].id}`}>
+      <Link 
+        key={questions[key].id} 
+        to={`/question/${questions[key].id}`}
+      >
         <div>{questions[key].body}</div>
       </Link>
+        <div>
+          <button onClick={handleEditClick}>Edit</button>
+          <button onClick={handleDeleteClick}>Delete</button>
+        </div>
       </div>
       )}
     </div>

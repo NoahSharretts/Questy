@@ -112,7 +112,7 @@ export const deleteQuestion = data => async dispatch => {
 const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
-  let newState = {...state};
+  let newState;
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
@@ -127,22 +127,18 @@ const questionReducer = (state = initialState, action) => {
         topic: action.topic
       }
     }
-    // case ADD_QUESTION: {
-    //   if (!state[action.question.id]) {
-    //     const newState = {
-    //       ...state,
-    //       [action.question.id]: action.question
-    //     };
-    //     const questionList = newState.list.map(id => newState[id]);
-    //     questionList.push(action.question);
-    //     newState.list = questionList;
-    //     return newState;
-    //   }
-    //   // return {
-    //   //   ...state,
-    //   //   []
-    //   // }
-    // }
+    case ADD_QUESTION: {
+      const newState = {
+        ...state,
+        [action.question.id]: action.question
+      };
+      const questionList = newState.list.map(id => newState[id]);
+      questionList.push(action.question);
+      newState.list = questionList;
+      return newState;
+      
+      
+    }
     // case EDIT_QUESTION: {
 
     // }
