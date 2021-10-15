@@ -16,22 +16,9 @@ const QuestionFeed = () => {
     dispatch(getQuestion());
   }, [dispatch]);
 
-  // if(!question) {
-  //   return null;
-  // };
 
   return (
-    <main>
-    <h2>Qustions!</h2>
-      <ul>{Object.keys(question).map(key =>
-        <li key={question[key].id}>
-        <Link to={`/question/${question[key].id}`}>
-          <div>{question[key].title}</div>
-        </Link>
-        </li>)}
-      </ul>
-    </main>
-    
+    <h2>Questions!</h2>
   );
 };
 

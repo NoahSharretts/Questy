@@ -32,10 +32,14 @@ const delete_question = deleteQuestion => ({
 })
 
 export const getQuestion = () => async dispatch => {
+  
 
   const response = await csrfFetch(`/api/question`)
+  console.log(response)
+  
 
   if(response.ok) {
+   
     const list = await response.json();
     dispatch(load_question(list))
   }
@@ -108,13 +112,14 @@ export const deleteQuestion = data => async dispatch => {
 const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
+  let newState = {...state};
   switch (action.type) {
     case LOAD_QUESTION: {
-      let newState;
       newState = Object.assign({}, state);
-      action.payload["allQuestions"].forEach((question) => {
+      action.payload.forEach((question) => {
         newState[question.id] = question;
       })
+      return newState
     }
     case LOAD_TOPICS: {
       return {
@@ -122,22 +127,22 @@ const questionReducer = (state = initialState, action) => {
         topic: action.topic
       }
     }
-    case ADD_QUESTION: {
-      if (!state[action.question.id]) {
-        const newState = {
-          ...state,
-          [action.question.id]: action.question
-        };
-        const questionList = newState.list.map(id => newState[id]);
-        questionList.push(action.question);
-        newState.list = questionList;
-        return newState;
-      }
-      // return {
-      //   ...state,
-      //   []
-      // }
-    }
+    // case ADD_QUESTION: {
+    //   if (!state[action.question.id]) {
+    //     const newState = {
+    //       ...state,
+    //       [action.question.id]: action.question
+    //     };
+    //     const questionList = newState.list.map(id => newState[id]);
+    //     questionList.push(action.question);
+    //     newState.list = questionList;
+    //     return newState;
+    //   }
+    //   // return {
+    //   //   ...state,
+    //   //   []
+    //   // }
+    // }
     // case EDIT_QUESTION: {
 
     // }
