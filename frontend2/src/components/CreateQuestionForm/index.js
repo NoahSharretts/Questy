@@ -1,34 +1,50 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { getQuestionTopics } from '../../store/question'
+import { getQuestionTopics, createQuestion } from '../../store/question'
 import './CreateQuestionForm.css'
 
 const CreateQuestionForm = () => {
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user)
+  const userId = useSelector(state => state.session.user.id)
   const history = useHistory();
-  const questionTopics = useSelector(state => state.question.topic)
+  // const questionTopics = useSelector(state => state.question.topic)
   const [body, setBody] = useState('');
-  const [topic, setTopic] = useState('')
+  const [topic, setTopic] = useState(1)
   const [errors, setErrors] = useState([]);
   
-  console.log(questionTopics, 'Topics')
-
-  useEffect(() => {
-    console.log('5')
-    dispatch(getQuestionTopics());
-    console.log('6')
-
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log('6')
-
-    if (questionTopics.length && !topic) {
-      setTopic(questionTopics[0]);
+  // console.log(questionTopics, 'Topics')
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setTopic(1)
+    const payload = {
+      userId,
+      body,
+      topic,
     }
-  }, [questionTopics, topic]);
+
+    const question = await dispatch(createQuestion(payload))
+    if (question) {
+      history.push('/feed')
+
+    }
+
+  }
+  // useEffect(() => {
+  //   console.log('5')
+  //   dispatch(getQuestionTopics());
+  //   console.log('6')
+
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   console.log('6')
+
+  //   if (questionTopics.length && !topic) {
+  //     setTopic(questionTopics[0]);
+  //   }
+  // }, [questionTopics, topic]);
 
   useEffect(() => {
     const ERRORS = [];
@@ -40,11 +56,6 @@ const CreateQuestionForm = () => {
     setErrors(ERRORS)
   }, [body])
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    history.push('/feed')
-  }
   return (
     <div className='question-form-container'>
         <h2>Got a Question?</h2>
@@ -63,14 +74,14 @@ const CreateQuestionForm = () => {
               onChange={(e) => setBody(e.target.value)} 
               value={body} />
             </label>
-            <select  
+            {/* <select  
               id='topic-selector'
               onChange={(e) => setTopic(e.target.value)}
               value={topic}>
               {questionTopics.map(topic =>
                 <option key={topic}>{topic}</option>
               )}
-            </select>
+            </select> */}
             <button
               disabled={errors.length ? true : false }
               type="submit"

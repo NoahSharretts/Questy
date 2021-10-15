@@ -69,7 +69,7 @@ export const getQuestionTopics = () => async dispatch => {
 };
 
 export const createQuestion = data => async dispatch => {
-  console.log(data);
+  console.log(data, 'data');
   const response = await csrfFetch(`/api/question`, {
     method: 'POST',
     headers: {
@@ -77,10 +77,12 @@ export const createQuestion = data => async dispatch => {
     },
     body: JSON.stringify(data),
   });
-
+  console.log('2')
   if (response.ok) {
     const question = await response.json();
     dispatch(add_question(question));
+    console.log('3')
+
     return question;
   }
 };
@@ -117,6 +119,7 @@ const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
   let newState;
+  let newQuestion;
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
@@ -132,16 +135,18 @@ const questionReducer = (state = initialState, action) => {
       }
     }
     case ADD_QUESTION: {
-      const newState = {
-        ...state,
-        [action.question.id]: action.question
-      };
-      const questionList = newState.list.map(id => newState[id]);
-      questionList.push(action.question);
-      newState.list = questionList;
+      console.log(newQuestion, '************* beginning *****************')
+
+      newState = Object.assign({}, state);
+      console.log(newQuestion, '************* start *****************')
+
+      newQuestion = action.payload;
+      console.log(newQuestion, '************* before *****************')
+
+      newState[newQuestion.id] = newQuestion;
+      console.log(newQuestion, '************* after *****************')
+      
       return newState;
-      
-      
     }
     // case EDIT_QUESTION: {
 

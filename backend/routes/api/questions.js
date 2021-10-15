@@ -104,12 +104,13 @@ router.post(
       topic
     } = req.body;
 
-    const question = Question.build({
+    const question = Question.create({
       userId: req.user.id,
       body,
       topicId: topic,
     })
-
+    
+    return res.json(question);
     const validatorErrors = validationResult(req)
 
     if(validatorErrors.isEmpty()) {
@@ -118,7 +119,6 @@ router.post(
     } else {
       const topics = await Topic.findAll();
       const errors = validatorErrors.array().map((error) => error.msg);
-      return res.json(topics)
     }
   })
 )
