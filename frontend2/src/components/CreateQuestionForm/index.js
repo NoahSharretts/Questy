@@ -1,20 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { createQuestion, getQuestionTopics } from '../../store/question'
+import { getQuestionTopics } from '../../store/question'
 import './CreateQuestionForm.css'
 
 const CreateQuestionForm = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user)
   const history = useHistory();
-  const questionTopics = useSelector(state => state.topic)
+  const questionTopics = useSelector(state => state.question.topic)
   const [body, setBody] = useState('');
   const [topic, setTopic] = useState('')
+  const [errors, setErrors] = useState([]);
   
+  console.log(questionTopics, 'Topics')
+
   useEffect(() => {
+    console.log('5')
     dispatch(getQuestionTopics());
+    console.log('6')
+
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('6')
+
+    if (questionTopics.length && !topic) {
+      setTopic(questionTopics[0]);
+    }
+  }, [questionTopics, topic]);
 
   useEffect(() => {
     const ERRORS = [];

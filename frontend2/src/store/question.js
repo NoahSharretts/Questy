@@ -56,10 +56,14 @@ export const getOneQuestion = id => async dispatch => {
 }
 
 export const getQuestionTopics = () => async dispatch => {
-  const response = await csrfFetch(`/api/question/topics`);
+  console.log('1')
 
+  const response = await csrfFetch(`/api/question/topics`);
+  console.log('2')
   if (response.ok) {
     const topics = await response.json();
+  console.log('3')
+
     dispatch(load_topics(topics));
   }
 };
