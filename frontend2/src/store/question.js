@@ -18,7 +18,7 @@ const load_topics = topic => ({
 
 const add_question = question => ({
   type: ADD_QUESTION,
-  payload: question
+  payload: question,
 })
 
 const edit_question = editQuestion => ({
@@ -33,13 +33,9 @@ const delete_question = deleteQuestion => ({
 
 export const getQuestion = () => async dispatch => {
   
-
   const response = await csrfFetch(`/api/question`)
-  console.log(response)
   
-
   if(response.ok) {
-   
     const list = await response.json();
     dispatch(load_question(list))
   }
@@ -56,14 +52,11 @@ export const getOneQuestion = id => async dispatch => {
 }
 
 export const getQuestionTopics = () => async dispatch => {
-  console.log('1')
 
   const response = await csrfFetch(`/api/question/topics`);
-  console.log('2')
+
   if (response.ok) {
     const topics = await response.json();
-  console.log('3')
-
     dispatch(load_topics(topics));
   }
 };
@@ -77,11 +70,11 @@ export const createQuestion = data => async dispatch => {
     },
     body: JSON.stringify(data),
   });
-  console.log('2')
+  
   if (response.ok) {
     const question = await response.json();
+    console.log(question, 'question')
     dispatch(add_question(question));
-    console.log('3')
 
     return question;
   }
@@ -123,6 +116,8 @@ const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
+      console.log(Object.keys(action))
+
       action.payload.forEach((question) => {
         newState[question.id] = question;
       })
@@ -134,26 +129,28 @@ const questionReducer = (state = initialState, action) => {
         topic: action.topic
       }
     }
-    case ADD_QUESTION: {
-      console.log(newQuestion, '************* beginning *****************')
+    // case ADD_QUESTION: {
+    //   // console.log(newState, '************* beginning *****************')
 
-      newState = Object.assign({}, state);
-      console.log(newQuestion, '************* start *****************')
+    //   newState = Object.assign({}, state);
+    //   // console.log(newState, '************* start *****************')
 
-      newQuestion = action.payload;
-      console.log(newQuestion, '************* before *****************')
+    //   // newQuestion = action.payload;
+    //   // console.log(newQuestion, '************* before *****************')
 
-      newState[newQuestion.id] = newQuestion;
-      console.log(newQuestion, '************* after *****************')
+    //   // newState[newQuestion.id] = newQuestion;
+    //   // console.log(newQuestion, '************* after *****************')
       
-      return newState;
-    }
+    //   return newState;
+    // }
     // case EDIT_QUESTION: {
 
     // }
-    // case DELETE_QUESTION: {
-
-    // }
+    case DELETE_QUESTION: {
+      newState = {...state};
+      delete newState[action.paylaod]
+      return newState
+    }
     default :
       return state;
 

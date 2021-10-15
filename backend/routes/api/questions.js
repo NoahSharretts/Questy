@@ -56,7 +56,6 @@ router.get(
 router.get(
   '/',
   requireAuth,
-  questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId)
@@ -70,7 +69,6 @@ router.get(
 router.get(
   '/:id(\\d+)',
   requireAuth,
-  questionValidator,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
     const question = await findByPk(questionId, {
@@ -86,7 +84,6 @@ router.get(
 router.get(
   '/new',
   requireAuth,
-  questionValidator,
   asyncHandler( async(req, res, next) => {
     const topics = await Topic.findAll()
 
@@ -97,29 +94,28 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  questionValidator,
   asyncHandler( async(req, res, next) => {
     const {
       body,
       topic
     } = req.body;
 
-    const question = Question.create({
+    const question = await Question.create({
       userId: req.user.id,
-      body,
       topicId: topic,
+      body,
     })
     
-    return res.json(question);
-    const validatorErrors = validationResult(req)
+    res.json(question);
+    // const validatorErrors = validationResult(req)
 
-    if(validatorErrors.isEmpty()) {
-      await question.save();
-      res.redirect('/')
-    } else {
-      const topics = await Topic.findAll();
-      const errors = validatorErrors.array().map((error) => error.msg);
-    }
+    // if(validatorErrors.isEmpty()) {
+    //   await question.save();
+    //   res.redirect('/')
+    // } else {
+    //   const topics = await Topic.findAll();
+    //   const errors = validatorErrors.array().map((error) => error.msg);
+    // }
   })
 )
 
