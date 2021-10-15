@@ -1,7 +1,7 @@
 import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getQuestion } from '../../store/question';
+import { getQuestion, deleteQuestion } from '../../store/question';
 import './QuestionFeed.css'
 
 const QuestionFeed = () => {
@@ -9,16 +9,27 @@ const QuestionFeed = () => {
 
   const sessionUser = useSelector(state => state.session.user)
 
-  const question =  useSelector(state => state.question);
+  const questions =  useSelector(state => state.question);
   // const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     dispatch(getQuestion());
   }, [dispatch]);
 
-
+  
+  console.log(questions, 'question')
+  
   return (
-    <h2>Questions!</h2>
+    <div className='questionContainer'>
+      {Object.keys(questions).map(key =>
+      <div className='questionDetails'>
+      <h5>{questions[key].User.username}</h5>  
+      <Link to={`/question/${questions[key].id}`}>
+        <div>{questions[key].body}</div>
+      </Link>
+      </div>
+      )}
+    </div>
   );
 };
 
