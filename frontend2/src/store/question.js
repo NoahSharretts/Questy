@@ -80,26 +80,30 @@ export const createQuestion = data => async dispatch => {
   }
 };
 
-export const editQuestion = data => async dispatch => {
-  const response = await csrfFetch(`/api/question/${data.id}`, {
+export const editQuestion = id => async dispatch => {
+  console.log(id,'fetch')
+  const response = await csrfFetch(`/api/question/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(id),
   });
-  
+  console.log(response, 'res')
   if (response.ok) {
     const question = await response.json();
+    console.log(question, 'qes')
     dispatch(edit_question(question));
     return question;
   }
 };
 
-export const deleteQuestion = data => async dispatch => {
-  const response = await csrfFetch(`/api/question/${data.id}`, {
+export const deleteQuestion = id => async dispatch => {
+  console.log(id, 'id')
+  const response = await csrfFetch(`/api/question/${id}`, {
     method: 'DELETE'
   });
+  console.log(response, 'response')
   
   if (response.ok) {
     const question = await response.json();
@@ -129,25 +133,15 @@ const questionReducer = (state = initialState, action) => {
         topic: action.topic
       }
     }
-    // case ADD_QUESTION: {
-    //   // console.log(newState, '************* beginning *****************')
-
-    //   newState = Object.assign({}, state);
-    //   // console.log(newState, '************* start *****************')
-
-    //   // newQuestion = action.payload;
-    //   // console.log(newQuestion, '************* before *****************')
-
-    //   // newState[newQuestion.id] = newQuestion;
-    //   // console.log(newQuestion, '************* after *****************')
-      
-    //   return newState;
-    // }
-    // case EDIT_QUESTION: {
-
-    // }
+    case EDIT_QUESTION: {
+      newState = Object.assign({}, state);
+      newQuestion = action.payload;
+      newState[newQuestion.id] = newQuestion;
+      return newState;
+    }
     case DELETE_QUESTION: {
       newState = {...state};
+      console.log(action.payload, 'paylaod')
       delete newState[action.paylaod]
       return newState
     }

@@ -29,7 +29,8 @@ const answerValidators = [
 // Checking permissions
 
 const checkPermissions = (question, currentUser) => {
-  if (question.userId !== currentUser.id ) {
+  console.log(currentUser, 'api')
+  if (question.dataValues.userId !== currentUser.id ) {
     const err = new Error('Illegal operation.');
     err.status = 403;
     throw err;
@@ -121,25 +122,26 @@ router.post(
 
 // PUT or POST: update/edit specific question by PK
 router.put(
-  '/edit/:id(\\d+)',
+  '/:id(\\d+)',
   requireAuth,
-  questionValidator,
   asyncHandler( async(req, res, next) => {
-    const questionId = parseInt( req.params.id, 10)
+    const questionId =  req.params.id
+    console.log(questionId, 'apiId')
     const question = await findByPk(questionId)
+    console.log(question, 'api')
     const {
       body,
       topic,
     } = req.body;
 
-    checkPermissions(question, res.locals.user)
-    
+    checkPermissions(question, req.user)
+    console.log('passed')
     question.update({
+      topicId: topic,
       body,
-      topicId: topic
     })
 
-    return res.json(question) 
+    res.json(question) 
   })
 )
 
@@ -148,14 +150,13 @@ router.delete(
   '/:id(\\d+)',
   requireAuth,
   asyncHandler( async(req, res, next) => {
-    const questionId = parseInt( req.params.id, 10)
+    const questionId = req.params.id;
     const question = await Question.findByPk(questionId);
 
-    checkPermissions(question, res.locals.user)
+    checkPermissions(question, req.user)
 
     await question.destroy();
-
-    return res.json(question)
+    return res.json(questionId)
   })
 )
 
