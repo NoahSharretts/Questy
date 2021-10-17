@@ -34,11 +34,11 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path='/question/:questionId'>
+            <QuestionPage />
+          </Route>
           <Route path='*'>
             <h2>Page Not Found</h2>
-          </Route>
-          <Route exact path='/question/:questionId'>
-            <QuestionPage />
           </Route>
         </Switch>
       )}

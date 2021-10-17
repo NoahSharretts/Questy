@@ -16,22 +16,8 @@ const QuestionFeed = () => {
     dispatch(getQuestion());
   }, [dispatch]);
 
-  const handleEditClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    let questionId = e.target.value;
-    console.log(questionId)
-    dispatch(editQuestion(questionId))
-    history.push('/feed')
-  }
 
-  const handleDeleteClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    let questionId = e.target.value;
-    dispatch(deleteQuestion(questionId))
-    history.push('/feed')
-  }
+  
 
   // console.log(sessionUser, 'question')
   
@@ -51,11 +37,6 @@ const QuestionFeed = () => {
       >
         <div>{questions[key].body}</div>
       </Link>
-         {(sessionUser.id === questions[key].userId)? 
-          <div>
-          <button value={questions[key].id}  onClick={handleEditClick}>Edit</button>
-          <button value={questions[key].id}  onClick={handleDeleteClick}>Delete</button>
-        </div> : null}
       </div>
       )}
     </div>
