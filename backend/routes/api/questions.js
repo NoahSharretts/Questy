@@ -41,7 +41,6 @@ const checkPermissions = (question, currentUser) => {
 // GET: all questions
 router.get(
   '/',
-  requireAuth,
   asyncHandler( async(req, res, next) => {
     const questions = await Question.findAll({
       include: [
@@ -54,37 +53,35 @@ router.get(
   })
 )
 // GET: all questions by for specific user
-router.get(
-  '/',
-  requireAuth,
-  asyncHandler( async(req, res, next) => {
-    const questionId = parseInt( req.params.id, 10)
-    const question = await findByPk(questionId)
+// router.get(
+//   '/',
+//   asyncHandler( async(req, res, next) => {
+//     const questionId = parseInt( req.params.id, 10)
+//     const question = await Question.findByPk(questionId)
 
-    return res.json(question)
-  })
+//     return res.json(question)
+//   })
   
-)
+// )
 
 // GET: question by specific PK
 router.get(
   '/:id(\\d+)',
-  requireAuth,
   asyncHandler( async(req, res, next) => {
     const questionId = parseInt( req.params.id, 10)
-    const question = await findByPk(questionId, {
-      where: questionId,
-      order: [["createdAt", "DESC"]],
-      include: User
+    const question = await Question.findByPk(questionId, {
+      include: [
+        User,
+        Topic,
+        Answer
+      ]
     });
-
-    return res.json(question)
+    res.json(question)
   })
 )
 // GET: create question form
 router.get(
   '/new',
-  requireAuth,
   asyncHandler( async(req, res, next) => {
     const topics = await Topic.findAll()
 

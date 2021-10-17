@@ -1,7 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const LOAD_QUESTION = 'LOAD_QUESTION';
-const LOAD_TOPICS = 'LOAD_TOPICS';
+const LOAD_ONE = 'LOAD_ONE';
 const ADD_QUESTION = 'ADD_QUESTION';
 const EDIT_QUESTION = 'EDIT_QUESTION';
 const DELETE_QUESTION = 'DELETE_QUESTION';
@@ -11,9 +11,9 @@ const load_question = list => ({
   payload: list,
 })
 
-const load_topics = topic => ({
-  type: LOAD_TOPICS,
-  payload: topic
+const load_one = oneQuestion => ({
+  type: LOAD_ONE,
+  payload: oneQuestion
 })
 
 const add_question = question => ({
@@ -47,19 +47,20 @@ export const getOneQuestion = id => async dispatch => {
 
   if(response.ok) {
     const question = await response.json();
-    dispatch(load_question(question))
+    console.log(question, 'getone///////////////')
+    dispatch(load_one(question))
   }
 }
 
-export const getQuestionTopics = () => async dispatch => {
+// export const getQuestionTopics = () => async dispatch => {
 
-  const response = await csrfFetch(`/api/question/topics`);
+//   const response = await csrfFetch(`/api/question/topics`);
 
-  if (response.ok) {
-    const topics = await response.json();
-    dispatch(load_topics(topics));
-  }
-};
+//   if (response.ok) {
+//     const topics = await response.json();
+//     dispatch(load_topics(topics));
+//   }
+// };
 
 export const createQuestion = data => async dispatch => {
   console.log(data, 'data');
@@ -120,18 +121,18 @@ const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
-
+      console.log('why wopuld')
       action.payload.forEach((question) => {
         newState[question.id] = question;
       })
       return newState
     }
-    case LOAD_TOPICS: {
-      return {
-        ...state,
-        topic: action.topic
-      }
-    }
+    // case LOAD_TOPICS: {
+    //   return {
+    //     ...state,
+    //     topic: action.topic
+    //   }
+    // }
     case EDIT_QUESTION: {
       newState = Object.assign({}, state);
       newQuestion = action.payload;
@@ -142,6 +143,13 @@ const questionReducer = (state = initialState, action) => {
       newState = {...state};
       console.log(newState, 'newState')
 
+      return newState
+    }
+    case LOAD_ONE: {
+      newState = Object.assign({}, state);
+      console.log(action.payload, 'payload')
+      newState = Object.assign({}, action.payload);
+      console.log(newState, 'ASBJK:DFgbl;jSDFSBHNKL:DGJD')
       return newState
     }
     default :
