@@ -28,7 +28,7 @@ function App() {
           <Route path='/feed'>
             {sessionUser? <QuestionFeed /> : <Home />}
           </Route>
-          <Route path='/question'> 
+          <Route exact path='/question'> 
             {sessionUser? <CreateQuestionForm /> : <Home />}
           </Route>
           <Route path="/signup">
@@ -37,7 +37,7 @@ function App() {
           <Route path='*'>
             <h2>Page Not Found</h2>
           </Route>
-          <Route path='/question/:questionId'>
+          <Route exact path='/question/:questionId'>
             <QuestionPage />
           </Route>
         </Switch>

@@ -80,14 +80,14 @@ export const createQuestion = data => async dispatch => {
   }
 };
 
-export const editQuestion = id => async dispatch => {
-  console.log(id,'fetch')
-  const response = await csrfFetch(`/api/question/${id}`, {
+export const editQuestion = payload => async dispatch => {
+  console.log(payload,'fetch')
+  const response = await csrfFetch(`/api/question/${payload}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(payload),
   });
   console.log(response, 'res')
   if (response.ok) {
@@ -120,7 +120,6 @@ const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
-      console.log(Object.keys(action))
 
       action.payload.forEach((question) => {
         newState[question.id] = question;
@@ -141,13 +140,12 @@ const questionReducer = (state = initialState, action) => {
     }
     case DELETE_QUESTION: {
       newState = {...state};
-      console.log(action.payload, 'paylaod')
-      delete newState[action.paylaod]
+      console.log(newState, 'newState')
+
       return newState
     }
     default :
       return state;
-
   }
 }
 
