@@ -121,7 +121,6 @@ const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_QUESTION: {
       newState = Object.assign({}, state);
-      console.log('why wopuld')
       action.payload.forEach((question) => {
         newState[question.id] = question;
       })

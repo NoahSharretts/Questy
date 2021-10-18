@@ -1,0 +1,19 @@
+.signup-form {
+  display: flex;
+  background-color: lightgray;
+  flex-direction: column;
+  padding: 10px;
+
+}
+
+.signup-form > label {
+ padding: 35px;
+}
+
+.signup-form > h2 {
+  padding-left: 35px;
+}
+
+#signup-btn{
+  
+}

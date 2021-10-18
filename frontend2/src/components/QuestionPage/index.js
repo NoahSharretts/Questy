@@ -39,7 +39,7 @@ function QuestionPage() {
           <button value={question.id}  onClick={handleQuestionDelete}>Delete</button>
         </div> : null}
       <h2>Answers</h2>
-      {answers.map( (answer) =>
+      {/* {answers.map( (answer) =>
         <div key={question}>
           <h3>{answer.body}</h3>
           <div key={question}>
@@ -49,7 +49,7 @@ function QuestionPage() {
             </div> : null}
           </div>
         </div>
-      )}
+      )} */}
     </>
   )
 }

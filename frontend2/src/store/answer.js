@@ -37,7 +37,7 @@ export const getAnswers = (id) => async dispatch => {
 
 export const editAnswers = (data) => async dispatch => {
   
-  const response = await csrfFetch(`/api/question/${id}/answers`, {
+  const response = await csrfFetch(`/api/answers/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export const editAnswers = (data) => async dispatch => {
   }
 }
 
-export const createAnswers = (data) => async dispatch => {
+export const createAnswers = (data, id) => async dispatch => {
   
   const response = await csrfFetch(`/api/question/${id}/answers`, {
     method: 'POST',
@@ -72,7 +72,7 @@ export const createAnswers = (data) => async dispatch => {
 
 export const deleteAnswers = (id) => async dispatch => {
   
-  const response = await csrfFetch(`/api/question/${id}/answers`, {
+  const response = await csrfFetch(`/api/answers/${id}`, {
     method:'DELETE'
   })
   
@@ -85,18 +85,31 @@ export const deleteAnswers = (id) => async dispatch => {
 const initialState = {}
 
 const answerReducer = (state = initialState, action) => {
+  let newState;
+  let newAnswer;
   switch(action.type) {
     case LOAD_ANSWER: {
-      
-    }
-    case ADD_ANSWER: {
-      
+      newState = Object.assign({}, state);
+      action.payload.forEach((answer) => {
+        newState[answer.id] = answer;
+      })
+      return newState
     }
     case EDIT_ANSWER: {
-      
+      newState = Object.assign({}, state);
+      newAnswer = action.payload;
+      newState[newAnswer.id] = newAnswer;
+      console.log(newState,'tesing')
+      return newState;
     }
     case DELETE_ANSWER: {
-      
+      newState = {...state};
+      console.log(newState, 'newState')
+      delete newState[action.payload];
+      return newState
+    }
+    default: {
+      return state
     }
   }
 }
