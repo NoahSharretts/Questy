@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { editQuestion } from "../../store/question";
-
+import './EditQuestionForm.css'
 
 function EditQuestionForm() {
   const { questionId } = useParams();
   const history = useHistory();
-  const question = useSelector(state => state.question[questionId])
+  const question = useSelector(state => state.question)
   const dispatch = useDispatch();
   const [body, setBody] = useState('')
   const [topic, setTopic] = useState(1)
@@ -35,10 +35,9 @@ function EditQuestionForm() {
   }
 
   return (
-    <div>
+    <div className='edit-form'>
       <h2>Edit your Question</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='body'>Question</label>
+      <form  onSubmit={handleSubmit}>
         <input 
           id='body' 
           type='text' 

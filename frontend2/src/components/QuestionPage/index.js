@@ -6,6 +6,7 @@ import { getOneQuestion, deleteQuestion } from '../../store/question'
 import EditQuestionForm from '../EditQuestionForm';
 import AnswersFeed from '../AnswersFeed';
 import EditAnswerForm from '../EditAnswerForm';
+import './QuestionPage.css'
 
 
 function QuestionPage() {
@@ -13,13 +14,14 @@ function QuestionPage() {
   const { questionId } = useParams();
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user)
-  const question = useSelector(state => state.question[questionId]);
+  const question = useSelector(state => state.question);
+
+  console.log(questionId)
+  useEffect(() => {
+    dispatch(getOneQuestion(questionId))
+  }, [dispatch, questionId])
   
-  // useEffect(() => {
-  //   dispatch(getOneQuestion(questionId))
-  // }, [dispatch, questionId])
   
-  const answers = question.Answers
   const handleQuestionDelete = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -31,8 +33,8 @@ function QuestionPage() {
 
 
   return (
-    <>
-      <div>{question.body}</div>
+    <div className='edit-container'>
+      <div id='edit-question'>{question.body}</div>
       {(sessionUser.id === question.userId)? 
           <div>
           <EditQuestionForm />  
@@ -50,7 +52,7 @@ function QuestionPage() {
           </div>
         </div>
       )} */}
-    </>
+    </div>
   )
 }
 
