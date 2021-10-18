@@ -19,7 +19,7 @@ const answerValidators = [
 
 // Check permissions
 const checkPermissions = (question, currentUser) => {
-  if (question.userId !== currentUser.id ) {
+  if (question.dataValues.userId !== currentUser.id ) {
     const err = new Error('Illegal operation.');
     err.status = 403;
     throw err;
@@ -29,13 +29,13 @@ const checkPermissions = (question, currentUser) => {
 router.put(
   '/:id(\\d+)',
   requireAuth,
-  answerValidators,
   asyncHandler( async(req, res, next) => {
     const answerId = parseInt( req.params.id, 10)
-    const answer = await findByPk(answerId)
+    console.log(answerId)
     const { body } = req.body;
+    const answer = await Answer.findByPk(answerId)
 
-    checkPermissions(answer, res.locals.user)
+    checkPermissions(answer, req.user)
     
     answer.update({ body })
 
@@ -48,9 +48,9 @@ router.delete(
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const answerId = parseInt( req.params.id, 10)
-    const answer = await findByPk(answerId)
+    const answer = await Answer.findByPk(answerId)
 
-    checkPermissions(answer, res.locals.user)
+    checkPermissions(answer, req.user)
 
     await answer.destroy();
 

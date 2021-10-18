@@ -36,7 +36,7 @@ export const getAnswers = id => async dispatch => {
 }
 
 export const editAnswers = (data) => async dispatch => {
-  
+  console.log(data,'data')
   const response = await csrfFetch(`/api/answers/${data.id}`, {
     method: 'PUT',
     headers: {
@@ -69,8 +69,7 @@ export const createAnswers = (payload) => async dispatch => {
   }
 }
 
-export const deleteAnswers = (id) => async dispatch => {
-  
+export const deleteAnswers = id => async dispatch => {
   const response = await csrfFetch(`/api/answers/${id}`, {
     method:'DELETE'
   })

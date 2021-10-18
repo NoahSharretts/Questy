@@ -14,7 +14,6 @@ function CreateAnswer({ setShowForm }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    console.log(questionId,'herherhehr')
     const payload ={
       body,
       questionId

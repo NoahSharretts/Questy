@@ -39,17 +39,6 @@ function QuestionPage() {
           <EditQuestionForm />  
           <button value={question.id}  onClick={handleQuestionDelete}>Delete</button>
         </div> : null}
-      {/* {answers.map( (answer) =>
-        <div key={question}>
-          <h3>{answer.body}</h3>
-          <div key={question}>
-            {(sessionUser.id === question.userId)? 
-              <div key={question}>
-              <EditAnswerForm {...answers}/>  
-            </div> : null}
-          </div>
-        </div>
-      )} */}
       <AnswersFeed />
     </div>
       

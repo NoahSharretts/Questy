@@ -1,42 +1,50 @@
 import { useState } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { editQuestion } from "../../store/question";
+import { editAnswers } from '../../store/answer'
 
 
-function EditAnswerForm() {
+function EditAnswerForm({ props }) {
   const { questionId } = useParams();
   const history = useHistory();
-  const question = useSelector(state => state.question[questionId])
-
+  const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user)
   const [body, setBody] = useState('')
-
-  const handleSubmit = (e) => {
+  const answer = useSelector(state => state.answer[props.answerId])
+  
+  
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const payload = {
-      id: questionId,
+    
+    const payload ={
+      id: props.answerId,
       body,
+      questionId
     }
 
-    dispatchEvent(editQuestion(payload))
+    const answer = await dispatch(editAnswers(payload))
+    if(answer) {
+      props.setShowForm(false);
+      history.push(`/question/${questionId}`)
+    }
   }
 
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push(`question/${questionId}`)
+    props.setShowForm(false);
   }
 
   return (
     <div>
-      <h2>Edit your Question</h2>
+      <h2>Edit your Answer</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='body'>Question</label>
+        <label htmlFor='body'></label>
         <input 
           id='body' 
           type='text' 
           value={body} 
-          placeholder={question.body}
+          placeholder={answer.body}
           onChange={(e) => setBody(e.target.value)} >
         </input>
         <div>
