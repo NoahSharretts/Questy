@@ -3,6 +3,7 @@ import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import { getAnswers } from '../../store/answer'
+import AnswerModal from '../CreateAnswerForm';
 import './AnswersFeed.css'
 
 function AnswersFeed() {
@@ -21,7 +22,8 @@ function AnswersFeed() {
     <div>
       <div className='answer-header'>
         <h2>Answers</h2>
-        <button id='add-awnser'>Add Answer</button>
+        <AnswerModal />
+        {/* <button id='add-awnser'>Add Answer</button> */}
       </div>  
       <div className='answersContainer'>
       {Object.keys(answers).map(key =>
