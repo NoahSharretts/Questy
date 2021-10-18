@@ -1,0 +1,18 @@
+.question-form-container {
+  display: flex;
+  background-color: lightgray;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+}
+
+button {
+  background-color: white;
+  
+}
+
+.errors{
+  background-color: white;
+  color: red;
+}

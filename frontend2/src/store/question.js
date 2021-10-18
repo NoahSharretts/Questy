@@ -83,7 +83,7 @@ export const createQuestion = data => async dispatch => {
 
 export const editQuestion = payload => async dispatch => {
   console.log(payload,'fetch')
-  const response = await csrfFetch(`/api/question/${payload}`, {
+  const response = await csrfFetch(`/api/question/${payload.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -137,12 +137,13 @@ const questionReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newQuestion = action.payload;
       newState[newQuestion.id] = newQuestion;
+      console.log(newState,'tesing')
       return newState;
     }
     case DELETE_QUESTION: {
       newState = {...state};
       console.log(newState, 'newState')
-
+      delete newState[action.payload];
       return newState
     }
     case LOAD_ONE: {

@@ -11,7 +11,7 @@ const QuestionFeed = () => {
   const sessionUser = useSelector(state => state.session.user)
   const questions =  useSelector(state => state.question);
   // const [showForm, setShowForm] = useState(false);
-
+  console.log(questions, 'questions')
   useEffect(() => {
     dispatch(getQuestion());
   }, [dispatch]);
@@ -30,12 +30,12 @@ const QuestionFeed = () => {
         key={questions[key].id}
         className='questionDetails'
       >
-      <h5>{questions[key].User.username}</h5>  
+      <h5></h5>  
       <Link 
         key={questions[key].id} 
         to={`/question/${questions[key].id}`}
       >
-        <div>{questions[key].body}</div>
+        <div className='question'>{questions[key].body}</div>
       </Link>
       </div>
       )}

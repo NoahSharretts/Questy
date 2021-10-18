@@ -124,7 +124,7 @@ router.put(
   asyncHandler( async(req, res, next) => {
     const questionId =  req.params.id
     console.log(questionId, 'apiId')
-    const question = await findByPk(questionId)
+    const question = await Question.findByPk(questionId)
     console.log(question, 'api')
     const {
       body,

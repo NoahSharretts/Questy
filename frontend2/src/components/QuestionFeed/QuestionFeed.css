@@ -1,8 +1,28 @@
 .questionContainer {
   background-color: lightgray;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 33%;
 }
 
 .questionDetails {
-  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  width: 75%;
+  display: flex;
+}
+
+.question{
+  background-color: azure;
+  padding: 10px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
