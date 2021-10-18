@@ -15,7 +15,6 @@ function AnswersFeed() {
   
 
   const answers = useSelector(state => state.answer)
-  console.log(answers, "answers")
 
   useEffect(() => {
     dispatch(getAnswers(questionId));

@@ -15,10 +15,6 @@ function SignupFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
-  const handleDemoUser = (e) => {
-    e.preventDefault();
-    setErrors([]);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,11 +73,6 @@ function SignupFormPage() {
           />
         </label>
         <button id='signup-btn'type="submit">Sign Up</button>
-      </form>
-      <form onSubmit={handleDemoUser}>
-        <input type="hidden" name="username" value="Demo-lition"></input>
-        <input type="hidden" name="password" value="password"></input>
-        <button className="loginButton" type="submit">Log in as Demo User</button>
       </form>
     </div>
   );

@@ -31,7 +31,6 @@ router.put(
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const answerId = parseInt( req.params.id, 10)
-    console.log(answerId)
     const { body } = req.body;
     const answer = await Answer.findByPk(answerId)
 

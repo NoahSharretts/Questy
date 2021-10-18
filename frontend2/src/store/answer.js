@@ -28,7 +28,7 @@ const delete_answer = deleteAnswer => ({
 export const getAnswers = id => async dispatch => {
   
   const response = await csrfFetch(`/api/question/${id}/answers`)
-  console.log(response, 'res')
+
   if(response.ok) {
     const list = await response.json();
     dispatch(load_answer(list))
@@ -36,7 +36,6 @@ export const getAnswers = id => async dispatch => {
 }
 
 export const editAnswers = (data) => async dispatch => {
-  console.log(data,'data')
   const response = await csrfFetch(`/api/answers/${data.id}`, {
     method: 'PUT',
     headers: {
@@ -97,7 +96,6 @@ const answerReducer = (state = initialState, action) => {
       newState = Object.assign({}, state)
       newAnswer = action.payload;
       newState[newAnswer.id] = newAnswer;
-      console.log(newState, 'done')
       return newState
     }
     case EDIT_ANSWER: {

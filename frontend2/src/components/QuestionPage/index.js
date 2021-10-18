@@ -15,7 +15,6 @@ function QuestionPage() {
   const sessionUser = useSelector(state => state.session.user)
   const question = useSelector(state => state.question);
 
-  console.log(questionId)
   useEffect(() => {
     dispatch(getOneQuestion(questionId))
   }, [dispatch, questionId])
