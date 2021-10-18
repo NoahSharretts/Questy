@@ -1,0 +1,15 @@
+.navbar{
+  display: flex;
+  width: 100%;
+  background-color: lightsteelblue;
+  border: 1px solid black;
+}
+
+.navbar-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  padding: 5px;
+}

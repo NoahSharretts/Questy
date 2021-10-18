@@ -1,0 +1,15 @@
+.answerDetails {
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.answer-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.add-answer {
+
+}

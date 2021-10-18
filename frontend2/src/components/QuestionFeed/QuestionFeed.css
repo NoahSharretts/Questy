@@ -1,0 +1,42 @@
+.questionContainer {
+  background-color: lightgray;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66%;
+  margin: 10px;
+}
+
+.questionDetails {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  flex-direction: row;
+  border: 1px solid black;
+  background-color: azure;
+  width: 100%;
+  margin: 10px;
+  font-weight: normal;
+}
+
+.questionDetails > a {
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.questionDetails > a:hover {
+ text-decoration: underline;
+}
+
+.question{
+  padding: 10px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
