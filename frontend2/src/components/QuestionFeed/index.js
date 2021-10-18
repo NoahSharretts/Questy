@@ -16,13 +16,6 @@ const QuestionFeed = () => {
     dispatch(getQuestion());
   }, [dispatch]);
 
-
-  
-
-  // console.log(sessionUser, 'question')
-  
-  // console.log(questions, 'question')
-  
   return (
     <div className='questionContainer'>
       {Object.keys(questions).map(key =>

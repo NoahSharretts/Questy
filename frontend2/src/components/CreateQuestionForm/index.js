@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom'
-import { getQuestionTopics, createQuestion } from '../../store/question'
+import { createQuestion } from '../../store/question'
 import './CreateQuestionForm.css'
 
 const CreateQuestionForm = () => {
@@ -13,7 +13,7 @@ const CreateQuestionForm = () => {
   const [topic, setTopic] = useState(1)
   const [errors, setErrors] = useState([]);
   
-  // console.log(questionTopics, 'Topics')
+  
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,28 +23,12 @@ const CreateQuestionForm = () => {
       body,
       topic,
     }
-
     const question = await dispatch(createQuestion(payload))
     if (question) {
       history.push('/feed')
 
     }
-
   }
-  // useEffect(() => {
-  //   console.log('5')
-  //   dispatch(getQuestionTopics());
-  //   console.log('6')
-
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   console.log('6')
-
-  //   if (questionTopics.length && !topic) {
-  //     setTopic(questionTopics[0]);
-  //   }
-  // }, [questionTopics, topic]);
 
   useEffect(() => {
     const ERRORS = [];
