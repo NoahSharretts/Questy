@@ -64,24 +64,14 @@ const CreateQuestionForm = () => {
           <li key={err}>{err}</li>
         ))}
         </ul>
-        <form onSubmit={handleSubmit} className='question-form'>
-          <div>
-            <label>
-              What would you like to ask?
-              <input 
-              id='body' 
-              type='text' 
-              onChange={(e) => setBody(e.target.value)} 
-              value={body} />
-            </label>
-            {/* <select  
-              id='topic-selector'
-              onChange={(e) => setTopic(e.target.value)}
-              value={topic}>
-              {questionTopics.map(topic =>
-                <option key={topic}>{topic}</option>
-              )}
-            </select> */}
+        <form onSubmit={handleSubmit}>
+          <div className='question-form'>
+            <label htmlFor='body'>What would you like to ask?</label>
+            <textarea 
+            id='body' 
+            type='text' 
+            onChange={(e) => setBody(e.target.value)} 
+            value={body} />
             <button
               disabled={errors.length ? true : false }
               type="submit"
