@@ -10,12 +10,12 @@ function CreateAnswer({ setShowForm }) {
   const sessionUser = useSelector(state => state.session.user)
   const [body, setBody] = useState('')
   const { questionId } = useParams();
-
+  
   const handleSubmit = async (e) => {
-    e.preventDefualt();
-
+    e.preventDefault();
+    
+    console.log(questionId,'herherhehr')
     const payload ={
-      userId: sessionUser.id,
       body,
       questionId
     }
@@ -28,7 +28,7 @@ function CreateAnswer({ setShowForm }) {
   }
 
   const handleCancel = (e) => {
-    e.preventDefualt()
+    e.preventDefault();
     setShowForm(false);
   }
 

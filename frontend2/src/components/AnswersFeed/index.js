@@ -28,7 +28,7 @@ function AnswersFeed() {
       <div className='answersContainer'>
       {Object.keys(answers).map(key =>
       <div className='answerDetails'>
-        <h5>{answers[key].User.username}</h5>  
+        <h5>{answers[key].User ? answers[key].username : null}</h5>  
         <div
           key={answers[key].id}
           className='question'>{answers[key].body}</div>

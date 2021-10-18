@@ -52,21 +52,20 @@ export const editAnswers = (data) => async dispatch => {
   }
 }
 
-export const createAnswers = (data, id) => async dispatch => {
+export const createAnswers = (payload) => async dispatch => {
   
-  const response = await csrfFetch(`/api/question/${id}/answers`, {
+  const response = await csrfFetch(`/api/question/${payload.questionId}/answers`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(payload)
   })
   
   if(response.ok) {
     const answer = await response.json();
     dispatch(add_answer(answer))
     return answer
-
   }
 }
 
@@ -95,16 +94,21 @@ const answerReducer = (state = initialState, action) => {
       })
       return newState
     }
+    case ADD_ANSWER: {
+      newState = Object.assign({}, state)
+      newAnswer = action.payload;
+      newState[newAnswer.id] = newAnswer;
+      console.log(newState, 'done')
+      return newState
+    }
     case EDIT_ANSWER: {
       newState = Object.assign({}, state);
       newAnswer = action.payload;
       newState[newAnswer.id] = newAnswer;
-      console.log(newState,'tesing')
       return newState;
     }
     case DELETE_ANSWER: {
       newState = {...state};
-      console.log(newState, 'newState')
       delete newState[action.payload];
       return newState
     }

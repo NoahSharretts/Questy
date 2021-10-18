@@ -148,16 +148,14 @@ router.delete(
 router.post(
   '/:id(\\d+)/answers',
   requireAuth,
-  answerValidators,
   asyncHandler( async(req, res, next) => {
     const { body } = req.body;
     const theQuestionId = parseInt( req.params.id, 10)
-    const addAnswer = await Answer.build({
+    const addAnswer = await Answer.create({
       userId: req.user.id,
       body,
       questionId: theQuestionId
     })
-
     return res.json(addAnswer)
   })
 )

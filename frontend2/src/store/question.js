@@ -47,7 +47,6 @@ export const getOneQuestion = id => async dispatch => {
 
   if(response.ok) {
     const question = await response.json();
-    console.log(question, 'getone///////////////')
     dispatch(load_one(question))
   }
 }
@@ -63,7 +62,6 @@ export const getOneQuestion = id => async dispatch => {
 // };
 
 export const createQuestion = data => async dispatch => {
-  console.log(data, 'data-create-question');
   const response = await csrfFetch(`/api/question`, {
     method: 'POST',
     headers: {
@@ -74,7 +72,6 @@ export const createQuestion = data => async dispatch => {
   
   if (response.ok) {
     const question = await response.json();
-    console.log(question, 'question-create-question')
     dispatch(add_question(question));
 
     return question;
@@ -91,7 +88,6 @@ export const editQuestion = payload => async dispatch => {
   });
   if (response.ok) {
     const question = await response.json();
-    console.log(question, 'qes')
     dispatch(edit_question(question));
     return question;
   }
@@ -132,20 +128,16 @@ const questionReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newQuestion = action.payload;
       newState[newQuestion.id] = newQuestion;
-      console.log(newState,'tesing')
       return newState;
     }
     case DELETE_QUESTION: {
       newState = {...state};
-      console.log(newState, 'newState')
       delete newState[action.payload];
       return newState
     }
     case LOAD_ONE: {
-      newState = Object.assign({}, state);
-      console.log(action.payload, 'payload')
+      newState = Object.assign({}, state); 
       newState = Object.assign({}, action.payload);
-      console.log(newState, 'ASBJK:DFgbl;jSDFSBHNKL:DGJD')
       return newState
     }
     default :
