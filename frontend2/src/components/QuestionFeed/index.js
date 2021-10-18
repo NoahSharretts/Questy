@@ -11,12 +11,6 @@ const QuestionFeed = () => {
   const sessionUser = useSelector(state => state.session.user)
   const questions =  useSelector(state => state.question);
 
-  // Object.entries(questions).forEach((question) =>
-  //   console.log(question[1].body)
-  // )
-  
-  // const [showForm, setShowForm] = useState(false);
-  // console.log(question, 'questions')
   useEffect(() => {
     dispatch(getQuestion());
   }, [dispatch]);
@@ -34,11 +28,4 @@ const QuestionFeed = () => {
   );
 };
 
-{/* {Object.keys(questions).map(key =>
-<div key={questions[key].id} className='questionDetails'>
-  <h5>{questions[key].User.username}</h5>  
-  <Link to={`/question/${questions[key].id}`}>{questions[key].body}</Link>
-  <h6>{questions[key].createdAt}</h6>
-</div>
-)} */}
 export default QuestionFeed
