@@ -8,7 +8,6 @@ function EditAnswerForm({ props }) {
   const { questionId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user)
   const [body, setBody] = useState('')
   const answer = useSelector(state => state.answer[props.answerId])
   

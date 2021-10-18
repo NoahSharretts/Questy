@@ -18,7 +18,7 @@ function AnswersFeed() {
 
   useEffect(() => {
     dispatch(getAnswers(questionId));
-  }, [dispatch]);
+  }, [dispatch, questionId]);
 
   const handleAnswerDelete = (e) => {
     e.stopPropagation();

@@ -8,7 +8,6 @@ const CreateQuestionForm = () => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.session.user.id)
   const history = useHistory();
-  // const questionTopics = useSelector(state => state.question.topic)
   const [body, setBody] = useState('');
   const [topic, setTopic] = useState(1)
   const [errors, setErrors] = useState([]);

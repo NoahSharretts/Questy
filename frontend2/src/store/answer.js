@@ -106,7 +106,7 @@ const answerReducer = (state = initialState, action) => {
     }
     case DELETE_ANSWER: {
       newState = {...state};
-      delete newState[action.payload];
+      delete newState[action.payload.id];
       return newState
     }
     default: {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom'
 import { createAnswers } from '../../store/answer'
 
@@ -7,7 +7,6 @@ import { createAnswers } from '../../store/answer'
 function CreateAnswer({ setShowForm }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector(state => state.session.user)
   const [body, setBody] = useState('')
   const { questionId } = useParams();
   
