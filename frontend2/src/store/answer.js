@@ -25,10 +25,10 @@ const delete_answer = deleteAnswer => ({
   payload: deleteAnswer
 })
 
-export const getAnswers = (id) => async dispatch => {
+export const getAnswers = id => async dispatch => {
   
   const response = await csrfFetch(`/api/question/${id}/answers`)
-  
+  console.log(response, 'res')
   if(response.ok) {
     const list = await response.json();
     dispatch(load_answer(list))

@@ -30,7 +30,7 @@ function Navigation({ isLoaded }){
     <div className='navbar'>
       <div className='navbar-items'>
         <h1>Questy</h1>
-        <NavLink exact to='/feed'>Feed</NavLink>
+        <NavLink to='/feed'>Feed</NavLink>
         <NavLink to='/question'>Question?</NavLink>
         {isLoaded && sessionLinks}
       </div>

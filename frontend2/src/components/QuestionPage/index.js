@@ -5,7 +5,6 @@ import { useHistory, useParams } from 'react-router';
 import { getOneQuestion, deleteQuestion } from '../../store/question'
 import EditQuestionForm from '../EditQuestionForm';
 import AnswersFeed from '../AnswersFeed';
-import EditAnswerForm from '../EditAnswerForm';
 import './QuestionPage.css'
 
 
@@ -40,7 +39,6 @@ function QuestionPage() {
           <EditQuestionForm />  
           <button value={question.id}  onClick={handleQuestionDelete}>Delete</button>
         </div> : null}
-      <h2>Answers</h2>
       {/* {answers.map( (answer) =>
         <div key={question}>
           <h3>{answer.body}</h3>
@@ -52,7 +50,9 @@ function QuestionPage() {
           </div>
         </div>
       )} */}
+      <AnswersFeed />
     </div>
+      
   )
 }
 

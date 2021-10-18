@@ -29,7 +29,6 @@ const answerValidators = [
 // Checking permissions
 
 const checkPermissions = (question, currentUser) => {
-  console.log(currentUser, 'api')
   if (question.dataValues.userId !== currentUser.id ) {
     const err = new Error('Illegal operation.');
     err.status = 403;
@@ -105,15 +104,6 @@ router.post(
     })
     
     res.json(question);
-    // const validatorErrors = validationResult(req)
-
-    // if(validatorErrors.isEmpty()) {
-    //   await question.save();
-    //   res.redirect('/')
-    // } else {
-    //   const topics = await Topic.findAll();
-    //   const errors = validatorErrors.array().map((error) => error.msg);
-    // }
   })
 )
 
@@ -123,16 +113,13 @@ router.put(
   requireAuth,
   asyncHandler( async(req, res, next) => {
     const questionId =  req.params.id
-    console.log(questionId, 'apiId')
     const question = await Question.findByPk(questionId)
-    console.log(question, 'api')
     const {
       body,
       topic,
     } = req.body;
 
     checkPermissions(question, req.user)
-    console.log('passed')
     question.update({
       topicId: topic,
       body,
@@ -159,7 +146,7 @@ router.delete(
 
 // POST: adding answer to specific question
 router.post(
-  '/:id(\\d+)/answer',
+  '/:id(\\d+)/answers',
   requireAuth,
   answerValidators,
   asyncHandler( async(req, res, next) => {
@@ -174,5 +161,23 @@ router.post(
     return res.json(addAnswer)
   })
 )
+
+// GET: all answers with specific question
+router.get(
+  '/:id(\\d+)/answers',
+  asyncHandler( async(req, res, next) => {
+    const questionId = parseInt( req.params.id, 10)
+    const answers = await Answer.findAll({
+      where: {
+        questionId
+      },
+      include: [
+        User
+      ]
+    });
+    res.json(answers)
+  })
+)
+
 
 module.exports = router;

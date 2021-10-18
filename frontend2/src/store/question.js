@@ -63,7 +63,7 @@ export const getOneQuestion = id => async dispatch => {
 // };
 
 export const createQuestion = data => async dispatch => {
-  console.log(data, 'data');
+  console.log(data, 'data-create-question');
   const response = await csrfFetch(`/api/question`, {
     method: 'POST',
     headers: {
@@ -74,7 +74,7 @@ export const createQuestion = data => async dispatch => {
   
   if (response.ok) {
     const question = await response.json();
-    console.log(question, 'question')
+    console.log(question, 'question-create-question')
     dispatch(add_question(question));
 
     return question;
@@ -82,7 +82,6 @@ export const createQuestion = data => async dispatch => {
 };
 
 export const editQuestion = payload => async dispatch => {
-  console.log(payload,'fetch')
   const response = await csrfFetch(`/api/question/${payload.id}`, {
     method: 'PUT',
     headers: {
@@ -90,7 +89,6 @@ export const editQuestion = payload => async dispatch => {
     },
     body: JSON.stringify(payload),
   });
-  console.log(response, 'res')
   if (response.ok) {
     const question = await response.json();
     console.log(question, 'qes')
@@ -100,11 +98,9 @@ export const editQuestion = payload => async dispatch => {
 };
 
 export const deleteQuestion = id => async dispatch => {
-  console.log(id, 'id')
   const response = await csrfFetch(`/api/question/${id}`, {
     method: 'DELETE'
   });
-  console.log(response, 'response')
   
   if (response.ok) {
     const question = await response.json();
