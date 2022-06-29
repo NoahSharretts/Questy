@@ -46,8 +46,8 @@ export const getOneQuestion = id => async dispatch => {
   const response = await csrfFetch(`/api/question/${id}`)
 
   if(response.ok) {
-    const question = await response.json();
-    dispatch(load_one(question))
+    const oneQuestion = await response.json();
+    dispatch(load_one(oneQuestion))
   }
 }
 
@@ -108,10 +108,11 @@ export const deleteQuestion = id => async dispatch => {
 const initialState = {};
 
 const questionReducer = (state = initialState, action) => {
-  let newState;
-  let newQuestion;
+  let newState = {};
+  let newQuestion = {};
   switch (action.type) {
     case LOAD_QUESTION: {
+      console.log('whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
       newState = Object.assign({}, state);
       action.payload.forEach((question) => {
         newState[question.id] = question;
@@ -136,8 +137,10 @@ const questionReducer = (state = initialState, action) => {
       return newState
     }
     case LOAD_ONE: {
+      console.log('herhehrehrhehrehrher')
       newState = Object.assign({}, state); 
       newState = Object.assign({}, action.payload);
+      console.log(newState, '**************************************************************')
       return newState
     }
     default :

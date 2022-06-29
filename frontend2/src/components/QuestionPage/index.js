@@ -9,14 +9,16 @@ import './QuestionPage.css'
 
 
 function QuestionPage() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { questionId } = useParams();
-  const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user)
   const question = useSelector(state => state.question);
+  console.log('please')
 
   useEffect(() => {
     dispatch(getOneQuestion(questionId))
+    console.log('please')
   }, [dispatch, questionId])
   
   
@@ -28,7 +30,7 @@ function QuestionPage() {
     history.push('/feed')
   }
 
-
+  console.log(question, 'kkkkkkkkkkkkkkk')
 
   return (
     <div className='edit-container'>
@@ -38,7 +40,7 @@ function QuestionPage() {
           <EditQuestionForm />  
           <button value={question.id}  onClick={handleQuestionDelete}>Delete</button>
         </div> : null}
-      <AnswersFeed />
+      <AnswersFeed question={question}/>
     </div>
       
   )
