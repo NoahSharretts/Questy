@@ -13,7 +13,7 @@ function QuestionPage() {
   const history = useHistory();
   const { questionId } = useParams();
   const sessionUser = useSelector(state => state.session.user)
-  const question = useSelector(state => state.question);
+  const question = useSelector(state => state.question[questionId - 1]);
   console.log('please')
 
   useEffect(() => {
